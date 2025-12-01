@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 export const Route = createFileRoute('/posts/$students')({
   loader: async ({params}) => {
 
-    const postId = params.students;
+    const studentId = params.students;
 
     const response = await fetch(
-      `https://wprogramming-diagnostic-test.onrender.com/student/${postId}`
+      `https://wprogramming-diagnostic-test.onrender.com/student/${studentId}`
     )
 
     if (!response.ok) {
