@@ -4,7 +4,7 @@ export const Route = createFileRoute("/posts/$id")({
   loader: async ({ params }) => {
     const postId = params.id;
 
-    const response = await fetch(`http://localhost:8060/student/${postId}`);
+    const response = await fetch(`https://wprogramming-diagnostic-test.onrender.com/student/${postId}`);
 
     if (!response.ok) {
       throw new Error("Failed to fetch post");
