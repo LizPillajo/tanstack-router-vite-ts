@@ -1,73 +1,100 @@
-# React + TypeScript + Vite
+my-tanstack-router-vite-ts
+This is a base project configured with Vite, React, TypeScript, and the next-generation router TanStack Router. It leverages file-based routing for simple, type-safe route definition, and includes an example of data fetching using the loader function.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+✨ Key Features
+File-Based Routing: Routes are automatically defined by the directory structure in src/routes.
 
-Currently, two official plugins are available:
+TanStack Router: 100% type-safe and secure routing.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Data Loading (Loader): Example of how to load data on the /posts/$id route before rendering.
 
-## React Compiler
+Root Route (__root.tsx): Main layout component with global navigation.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+404 Page: Custom Not Found component.
 
-## Expanding the ESLint configuration
+Vite: Modern and fast build tool.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+TypeScript: Typed code for improved robustness.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+🛠️ Installation and Initial Setup
+To get started with the project, follow these installation steps. This includes initializing the project with Vite, installing TanStack Router, and configuring its plugin for file-based routing.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# 1. Create the project with Vite (React + TypeScript)
+npm create vite@latest my-tanstack-router-vite-ts -- --template react-ts
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# 2. Navigate to the project directory
+cd my-tanstack-router-vite-ts
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# 3. Install base React and Vite dependencies
+npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+# 4. Install TanStack Router as a dependency
+npm install @tanstack/react-router
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# 5. Install the Router plugin and Devtools as development dependencies
+npm install -D @tanstack/router-plugin @tanstack/router-devtools
+Once the installation is complete, you can run the development command:
+
+npm run dev
+
+📂 File Structure
+The folder structure is crucial, especially the src/routes directory, which defines your application's routes thanks to the TanStack Router plugin.
+
+my-tanstack-router-vite-ts/
+├── src/
+│   ├── components/
+│   │   └── NotFound.tsx             # Component for the 404 page
+│   ├── routes/
+│   │   ├── posts/
+│   │   │   └── $id.tsx              # Dynamic route for post details (/posts/:id)
+│   │   ├── __root.tsx               # Root route component (main layout)
+│   │   ├── about.tsx                # Static route for the "About" page (/about)
+│   │   └── index.tsx                # Static route for the home page (/)
+│   ├── main.tsx                     # Application entry point, initializes the router
+│   ├── routeTree.gen.ts             # File automatically generated by the plugin
+│   └── index.css                    # Global styles (assumed)
+└── vite.config.ts                   # Vite configuration with the TanStack Router plugin
+
+⚙️ Router Configuration
+vite.config.ts
+The tanstackRouter() plugin is essential here, as it is responsible for scanning the src/routes folder and generating the typed route file routeTree.gen.ts.
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import {tanstackRouter} from '@tanstack/router-plugin/vite'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [tanstackRouter(), react()], // Include the TanStack Router plugin
+})
+
+
+main.tsx
+The main file where the router is initialized and the default component for the not found page (defaultNotFoundComponent) is defined.
+
+
+📄 Key Routes (Code Examples)
+🏡 Root Route: src/routes/__root.tsx
+Defines the base layout with navigation links that will be applied to all routes.
+
+
+import * as React from 'react'
+import {Link, Outlet, createRootRoute } from '@tanstack/react-router' 
+
+export const Route = createRootRoute({
+  component: RootComponent,
+})
+
+function RootComponent() {
+  return (
+    <React.Fragment>
+      <header>
+        {/* Navigation links */}
+        <Link to= "/"> Home</Link>
+        <Link to= "/about"> About</Link>
+      </header>
+      {/* Outlet renders the current route component */}
+      <Outlet />
+    </React.Fragment>
+  )
+}
