@@ -6,7 +6,7 @@ export const Route = createFileRoute('/posts/$students')({
     const studentId = params.students;
 
     const response = await fetch(
-      `https://wprogramming-diagnostic-test.onrender.com/student/1/${studentId}`
+      `https://wprogramming-diagnostic-test.onrender.com/student/${studentId}`
     )
 
     if (!response.ok) {
