@@ -6,7 +6,7 @@ export const Route = createFileRoute('/posts/$students')({
     const studentId = params.students;
 
     const response = await fetch(
-      `https://wprogramming-diagnostic-test.onrender.com/student/${studentId}`
+      `https://wprogramming-diagnostic-test.onrender.com/student/1/${studentId}`
     )
 
     if (!response.ok) {
@@ -22,16 +22,16 @@ export const Route = createFileRoute('/posts/$students')({
 function StudentsComponent() {
   const student = Route.useLoaderData() as {
     id: number
-    name: string
-    lastname: string
+    firstName: string
+    lastName: string
     age: number
   }
 
   return (
     <div>
       <h1>Estudiante #{student.id}</h1>
-      <p><strong>Nombre:</strong> {student.name}</p>
-      <p><strong>Lastname:</strong> {student.lastname}</p>
+      <p><strong>Nombre:</strong> {student.firstName}</p>
+      <p><strong>Lastname:</strong> {student.lastName}</p>
       <p><strong>Age:</strong> {student.age}</p>
     </div>
   )

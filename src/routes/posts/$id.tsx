@@ -5,7 +5,7 @@ export const Route = createFileRoute('/posts/$id')({
 
     const postId = params.id;
 
-    const response = await fetch(`https://wprogramming-diagnostic-test.onrender.com/student/${postId}`);
+    const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
 
     if (!response.ok) {
       throw new Error('Failed to fetch post');
@@ -20,14 +20,16 @@ export const Route = createFileRoute('/posts/$id')({
 function PostDetailComponent() {
 
   const post = Route.useLoaderData() as { 
-    firstName: string; 
-    lastName: string;};
+    id: number; 
+    title: string; 
+    body: string 
+  };
 
   return (
     <div >
-      <h1 >Post #{post.firstName}: {post.lastName}</h1>
+      <h1 >Post #{post.id}: {post.title}</h1>
       <hr />
-      <p>{post.firstName}</p>
+      <p>{post.body}</p>
     </div>
   )
 }
